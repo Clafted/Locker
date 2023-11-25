@@ -1,9 +1,8 @@
 package Main;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import Data.DataManager;
+import Data.FileHandling.DataManager;
+import Data.FileHandling.SecuredData;
+import Data.FileHandling.SecuredData.lockType;
 
 public class Main 
 {
@@ -12,10 +11,13 @@ public class Main
 		System.out.println("Welcome to the MLH Data Hackathon!");
 		DataManager.Instance();
 		
-		JFrame frame = new JFrame();
-		frame.setSize(800, 500);
-		frame.setTitle("Title");
-		frame.setVisible(true);
+		try {
+			
+			DataManager.Instance().addSecuredData(new SecuredData(lockType.COMBINATION, "2251", "C:\\Users\\noahm\\OneDrive\\Desktop\\Data.txt"));
+		}catch(Exception e) {
+			
+			e.printStackTrace();
+		}
 	}
 	
 	
