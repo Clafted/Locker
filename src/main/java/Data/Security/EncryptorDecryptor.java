@@ -1,7 +1,7 @@
 package Data.Security;
 
-public interface EncryptorDecryptor<T, K> {
+public interface EncryptorDecryptor {
 
-	public T encrypt(T data, K key);
-	public T decrypt(T data, K key);
+	public String encrypt(String data, String key);
+	public String decrypt(String data, String key);
 }

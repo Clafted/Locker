@@ -36,7 +36,7 @@ public class DataManager
 		try {
 
 			setupApp();
-			getData();
+			loadData();
 		}catch(Exception e){
 
 			e.printStackTrace();
@@ -79,15 +79,59 @@ public class DataManager
 		// Prints out the file-paths and their codes
 		if(securedData == null) securedData = new ArrayList<SecuredData>();
 	}
-
+	
 	/**
-	 * Make any necessary updates to the files Object, including codes and files.
+	 *  Adds a file of a certain lockType, secured with a code
+	 *  
+	 * @param type
+	 * @param lockedFilePath
+	 * @param code
+	 * @throws IOException
+	 */
+	public void addSecuredData(SecuredData target){
+
+		securedData.add(target); 
+
+		// Write the updated files Object into the passwords file
+		try {
+			
+			ObjectOutputStream fileWriter = new ObjectOutputStream(new FileOutputStream(dataFile));
+			fileWriter.writeObject(securedData);
+			fileWriter.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public SecuredData getSecuredData(String fileName) {
+		
+		for (SecuredData file : securedData)
+			if(file.fileName.equals(fileName))
+				return file;
+		
+		System.out.println("That file does not exist!");
+		return null;
+	}
+	
+	public String getSecuredDataInfo(String fileName) {
+		
+		for (SecuredData file : securedData)
+			if(file.fileName.equals(fileName))
+				return file.toString();
+		
+		return "That file does not exist!";
+	}
+	
+	/**
+	 * Load saved securedData.
 	 * 
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
 	@SuppressWarnings("unchecked") 
-	private void getData() throws ClassNotFoundException, IOException {
+	private void loadData() throws ClassNotFoundException, IOException {
 
 		if(dataFile == null || dataFile.length() == 0){
 
@@ -98,28 +142,19 @@ public class DataManager
 		// Instantiate the files Object with any existing HashMap Objects from the file
 		ObjectInputStream oIS = new ObjectInputStream(new FileInputStream(dataFile));
 		securedData = (ArrayList<SecuredData>)oIS.readObject();
-		oIS.close();
 		
-		for(SecuredData file : securedData)
-			System.out.println("\n" + file);
+		oIS.close();
 	}
 
-	/**
-	 *  Adds a file of a certain lockType, secured with a code
-	 *  
-	 * @param type
-	 * @param lockedFilePath
-	 * @param code
-	 * @throws IOException
-	 */
-	public void addSecuredData(SecuredData target) throws IOException{
-
-		securedData.add(target); 
-
-		// Write the updated files Object into the passwords file
-		ObjectOutputStream fileWriter = new ObjectOutputStream(new FileOutputStream(dataFile));
-		fileWriter.writeObject(securedData);
-		fileWriter.close();
+	public String listData() {
+		
+		String list = "";
+		
+		for (int i = 0; i < securedData.size(); i++) {
+			
+			list += "\n" + (i + 1) + ".\n" + securedData.get(i) + "\n" ;
+		}
+		
+		return list;
 	}
-
 }
