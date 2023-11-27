@@ -28,6 +28,13 @@ public class Main
 		System.exit(0);
 	}
 	
+	/**
+	 * Uses back-end functionality using a given set of inputs.
+	 * <br><br>
+	 * The inputs must follow the commands formats available
+	 * 
+	 * @param input the actions the user wants to make.
+	 */
 	public static void handleInput(String[] input) {
 		
 		if (input[0].equals("-h")) {
@@ -52,6 +59,7 @@ public class Main
 				String path = input[3];
 				lockType type;
 				
+				// Determine how a key was generated
 				if (input[1].equals("COMBINATION"))
 					type = lockType.COMBINATION;
 				else if (input[1].equals("PERMUTATION"))
@@ -60,7 +68,7 @@ public class Main
 					type = lockType.STRING;
 				else 
 					return;
-				
+				// Saves public information of the secured data
 				try {
 					DataManager.Instance().addSecuredData(new SecuredData(type, key, new File(path)));
 				} catch(IOException e) {
@@ -75,7 +83,6 @@ public class Main
 			if(input.length == 3) {
 			
 				try {
-					
 					if (DataManager.Instance().getSecuredData(input[2]).convertData(input[1], new CaesarCipher(), input[0].equals("encrypt")))
 						System.out.println("Conversion complete!");
 					else
