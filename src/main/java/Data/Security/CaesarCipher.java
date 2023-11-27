@@ -10,22 +10,36 @@ package Data.Security;
  */
 public class CaesarCipher implements EncryptorDecryptor {
 
-	
+
 	public String encrypt(String data, String key) throws NumberFormatException {
+
+		int initialLength = data.length();
+		int shiftValue = Integer.parseInt(key);
 		
-		return caesarCipher(data, Integer.parseInt(key));
+		for(int i = 0; i < initialLength; i++)
+			data += (char)((((int)data.charAt(i) - 32 + shiftValue) % 96) + 32) + " ";
+
+		return data.substring(initialLength, data.length());
 	}
 
 	public String decrypt(String data, String key) throws NumberFormatException {
-		
-		return caesarCipher(data, -(Integer.parseInt(key)));
-	}
 
-	public String caesarCipher(String data, int shiftValue) {
+		String[] tokens = data.split(" " );
+		int shiftValue = Integer.parseInt(key);
 		
-		for(int i = 0; i < data.length(); i++)
-			data += (char)((int)data.charAt(i) + shiftValue);
+		String result = "";
+		int shiftedInt = 0;
 		
-		return data.substring(data.length() / 2, data.length());
+		for (String token : tokens) {
+			
+			if(token.length() == 0) continue;
+			
+			shiftedInt = (((int)token.charAt(0) - 32 - shiftValue) % 96) + 32;
+			if (shiftedInt < 0) shiftedInt += 128;
+			
+			result += (char)shiftedInt;
+		}
+		
+		return result;
 	}
 }

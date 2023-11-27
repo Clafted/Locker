@@ -37,6 +37,7 @@ public class Main
 					+ "\n- list : list all saved files"
 					+ "\n- add [lockType (COMBINATION/PERMUTATION/STRING)] [key] [path] : add a file to secure"
 					+ "\n- encrypt [key] [fileName] : encrypt the file with the given fileName"
+					+ "\n- decrypt [key] [fileName] : decrypt the file with the given fileName"
 					+ "\n- exit : close the program"
 					+ "\n");
 		} else if (input[0].equals("list")) {
@@ -51,55 +52,45 @@ public class Main
 				String path = input[3];
 				lockType type;
 				
-				
-				if (input[1].equals("COMBINATION")) {
-					
+				if (input[1].equals("COMBINATION"))
 					type = lockType.COMBINATION;
-				} else if (input[1].equals("PERMUTATION")) {
-					
+				else if (input[1].equals("PERMUTATION"))
 					type = lockType.PERMUTATION;
-				} else if (input[1].equals("STRING")) {
-					
+				else if (input[1].equals("STRING"))
 					type = lockType.STRING;
-				} else {
-					
+				else 
 					return;
-				}
 				
 				try {
-					
 					DataManager.Instance().addSecuredData(new SecuredData(type, key, new File(path)));
-				}catch(IOException e) {
-					
+				} catch(IOException e) {
 					System.out.println("Could not find specified file!\n");
 				}
-			} else {
+
+			} else
 				System.out.println("To add a file, use the command \"add [lockType (COMBINATION/PERMUTATION/STRING)] [key] [path]\"\n");
-			}
 			
-		} else if (input[0].equals("encrypt")) {
+		} else if (input[0].equals("encrypt") || input[0].equals("decrypt")) {
 			
 			if(input.length == 3) {
 			
 				try {
 					
-					DataManager.Instance().getSecuredData(input[2]).encryptData(input[1], new CaesarCipher());
+					if (DataManager.Instance().getSecuredData(input[2]).convertData(input[1], new CaesarCipher(), input[0].equals("encrypt")))
+						System.out.println("Conversion complete!");
+					else
+						System.out.println("Unable to complete conversion :(");
 					
 				} catch (NumberFormatException e) {
-
 					System.out.println("That is not a number\n");
 				}
-			} else {
 				
+			} else
 				System.out.println("To encrypt a file, use the command \"encrypt [key] [fileName]\"");
-			}
 			
-		} else if (input[0].equals("exit")) {
-			
+		} else if (input[0].equals("exit"))
 			System.out.println("Goodbye!");
-		} else {
-			
+		else
 			System.out.println("That is not one of the actions!\n");
-		}
 	}
 }
