@@ -1,4 +1,4 @@
-package Data.FileHandling;
+package data.filehandling;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Scanner;
 
-import Data.Security.EncryptorDecryptor;
+import data.security.EncryptorDecryptor;
 
 /**
  * A class to represent data which would be secured with encryption or decryption.

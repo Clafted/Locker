@@ -1,4 +1,4 @@
-package Data.FileHandling;
+package data.filehandling;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,11 +34,9 @@ public class DataManager
 		System.out.println("Creating DataManager");
 
 		try {
-
 			setupApp();
 			loadData();
 		}catch(Exception e){
-
 			e.printStackTrace();
 		}
 	}
@@ -59,23 +57,24 @@ public class DataManager
 	 * 
 	 * @throws Exception
 	 */
-	private void setupApp() throws Exception{
+	private void setupApp() throws Exception {
 
 		lockerFolder = new File(System.getProperty("user.home") + "/AppData/Local/Locker");
 		dataFile = new File(lockerFolder.getPath() + "/dataFile.txt");
 
 		// Creates and confirms Locker directory creation
-		if(lockerFolder.mkdir())
+		if(lockerFolder.mkdir()) {
 			System.out.println("Creating new directory");
-		else 
+		} else { 
 			System.out.println("Using existing directory");
-
+		}
 		// Creates and confirms passwords.txt file creation
-		if(dataFile.createNewFile())
+		if(dataFile.createNewFile()) {
 			System.out.println("Successfully created new passwords file");
-		else
+		} else {
 			System.out.println("Unable to create a passwords file");
-
+		}
+		
 		// Prints out the file-paths and their codes
 		if(securedData == null) securedData = new ArrayList<SecuredData>();
 	}
@@ -94,11 +93,9 @@ public class DataManager
 
 		// Write the updated files Object into the passwords file
 		try {
-			
 			ObjectOutputStream fileWriter = new ObjectOutputStream(new FileOutputStream(dataFile));
 			fileWriter.writeObject(securedData);
 			fileWriter.close();
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -107,9 +104,11 @@ public class DataManager
 	
 	public SecuredData getSecuredData(String fileName) {
 		
-		for (SecuredData file : securedData)
-			if(file.fileName.equals(fileName))
+		for (SecuredData file : securedData) {
+			if(file.fileName.equals(fileName)) {
 				return file;
+			}
+		}
 		
 		System.out.println("That file does not exist!");
 		return null;
@@ -117,9 +116,11 @@ public class DataManager
 	
 	public String getSecuredDataInfo(String fileName) {
 		
-		for (SecuredData file : securedData)
-			if(file.fileName.equals(fileName))
+		for (SecuredData file : securedData) {
+			if(file.fileName.equals(fileName)) {
 				return file.toString();
+			}
+		}
 		
 		return "That file does not exist!";
 	}
@@ -133,8 +134,8 @@ public class DataManager
 	@SuppressWarnings("unchecked") 
 	private void loadData() throws ClassNotFoundException, IOException {
 
-		if(dataFile == null || dataFile.length() == 0){
-
+		if(dataFile == null 
+				|| dataFile.length() == 0) {
 			System.out.println("Nothing to read");
 			return;
 		}
@@ -151,7 +152,6 @@ public class DataManager
 		String list = "";
 		
 		for (int i = 0; i < securedData.size(); i++) {
-			
 			list += "\n" + (i + 1) + ".\n" + securedData.get(i) + "\n" ;
 		}
 		

@@ -1,4 +1,4 @@
-package Data.Security;
+package data.security;
 
 /**
  * An implementation of EncryptorDecryptor which
@@ -10,36 +10,46 @@ package Data.Security;
  */
 public class CaesarCipher implements EncryptorDecryptor {
 
-
 	public String encrypt(String data, String key) throws NumberFormatException {
 
-		int initialLength = data.length();
 		int shiftValue = Integer.parseInt(key);
-		
-		for(int i = 0; i < initialLength; i++)
-			data += (char)((((int)data.charAt(i) - 32 + shiftValue) % 96) + 32) + " ";
-
-		return data.substring(initialLength, data.length());
+		return shift(data, shiftValue);
 	}
 
 	public String decrypt(String data, String key) throws NumberFormatException {
 
-		String[] tokens = data.split(" " );
 		int shiftValue = Integer.parseInt(key);
+		return shift(data, -shiftValue);
+	}
+	
+	/**
+	 * Use the Caesar Cipher method to shift all characters with the given shift value
+	 * 
+	 * @param data the content to shift
+	 * @param shift the value by which the content will be shifted
+	 * @return
+	 */
+	private String shift(String data, int shift) {
 		
-		String result = "";
-		int shiftedInt = 0;
+		int initialLength = data.length();
+		int shiftedAscii = 0;
 		
-		for (String token : tokens) {
+		// Iterate through each character
+		for(int i = 0; i < initialLength; i++) {
 			
-			if(token.length() == 0) continue;
-			
-			shiftedInt = (((int)token.charAt(0) - 32 - shiftValue) % 96) + 32;
-			if (shiftedInt < 0) shiftedInt += 128;
-			
-			result += (char)shiftedInt;
+			/*
+			 * 1. Convert character to int ASCII value
+			 * 2. Shift ASCII value down by 32 (ASCII characters 0-32 are not visible)
+			 * 3. Modulo by 96 (characters range from 32 to 127)
+			 * 4. Add 96 if current value is negative to stay within range
+			 * 5. Add 32 to return to actual ASCII value
+			 * 6. Convert ASCII value to character and append
+			 */
+			shiftedAscii = ((int)data.charAt(i) - 32 + shift) % 96;
+			shiftedAscii += (shiftedAscii < 0 ? 96 : 0) + 32;
+			data += (char)shiftedAscii;
 		}
 		
-		return result;
+		return data.substring(initialLength, initialLength * 2);
 	}
 }
