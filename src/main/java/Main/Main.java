@@ -48,6 +48,7 @@ public class Main
 					+ "\n- add [lockType (COMBINATION/PERMUTATION/STRING)] [key] [path] : add a file to secure"
 					+ "\n- encrypt [encryption method] [key] [fileName] : encrypt the file with the given fileName"
 					+ "\n- decrypt [decryption method] [key] [fileName] : decrypt the file with the given fileName"
+					+ "\n- break [key] [file]: time the breaking of a key of an encrypted file"
 					+ "\n- exit : close the program"
 					+ "\n");
 		} else if (input[0].equals("list")) {
@@ -105,6 +106,12 @@ public class Main
 			} else
 				System.out.println("To encrypt or decrypt a file, use the command \"encrypt/decrypt [method] [key] [fileName]\"");
 			
+		} else if (input[0].equals("break")) {
+			if (input.length == 2) {
+				
+			} else {
+				System.out.println("To break an encryption algorithm, use the command \"break [key] [file]\"");
+			}
 		} else if (input[0].equals("exit")) {
 			System.out.println("Goodbye!");
 		} else {
