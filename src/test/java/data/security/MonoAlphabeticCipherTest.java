@@ -3,6 +3,8 @@ package data.security;
 import static org.junit.Assert.assertTrue;
 import org.junit.*;
 
+import data.security.cipher.MonoAlphabeticCipher;
+
 public class MonoAlphabeticCipherTest {
 	
 	String plainText = "The lazy BROWN FOX jumped OVER the fence.";

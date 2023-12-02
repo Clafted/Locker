@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Scanner;
 
-import data.security.EncryptorDecryptor;
+import data.security.cipher.EncryptorDecryptor;
 
 /**
  * A class to represent data which would be secured with encryption or decryption.

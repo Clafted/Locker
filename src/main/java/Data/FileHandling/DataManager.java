@@ -31,8 +31,6 @@ public class DataManager
 
 
 	private DataManager(){
-		System.out.println("Creating DataManager");
-
 		try {
 			setupApp();
 			loadData();
@@ -63,10 +61,10 @@ public class DataManager
 		dataFile = new File(lockerFolder.getPath() + "/dataFile.txt");
 
 		// Creates and confirms Locker directory creation
-		if(lockerFolder.mkdir()) {
-			System.out.println("Creating new directory");
-		} else { 
-			System.out.println("Using existing directory");
+		if(!lockerFolder.mkdir()) {
+			if (lockerFolder.exists()) {
+				System.out.println("");
+			}
 		}
 		// Creates and confirms passwords.txt file creation
 		if(dataFile.createNewFile()) {
@@ -91,8 +89,8 @@ public class DataManager
 
 		securedData.add(target); 
 
-		// Write the updated files Object into the passwords file
 		try {
+			// Write the updated files Object into the passwords file
 			ObjectOutputStream fileWriter = new ObjectOutputStream(new FileOutputStream(dataFile));
 			fileWriter.writeObject(securedData);
 			fileWriter.close();
@@ -102,18 +100,29 @@ public class DataManager
 		
 	}
 	
+	/**
+	 * Locate the SecuredData Object with the file 
+	 * of the given name, or null if it is not found.
+	 * 
+	 * @param fileName the name of the file to locate
+	 * @return The SecuredData object if located, or null otherwise
+	 */
 	public SecuredData getSecuredData(String fileName) {
 		
+		// Searches through existing SecuredData for target
 		for (SecuredData file : securedData) {
 			if(file.fileName.equals(fileName)) {
 				return file;
 			}
 		}
-		
-		System.out.println("That file does not exist!");
 		return null;
 	}
-	
+
+	/**
+	 * Locates a SecuredData 
+	 * @param fileName
+	 * @return
+	 */
 	public String getSecuredDataInfo(String fileName) {
 		
 		for (SecuredData file : securedData) {
@@ -121,8 +130,7 @@ public class DataManager
 				return file.toString();
 			}
 		}
-		
-		return "That file does not exist!";
+		return "N/A";
 	}
 	
 	/**

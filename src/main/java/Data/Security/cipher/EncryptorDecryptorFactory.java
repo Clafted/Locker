@@ -1,4 +1,4 @@
-package data.security;
+package data.security.cipher;
 
 public class EncryptorDecryptorFactory {
 	

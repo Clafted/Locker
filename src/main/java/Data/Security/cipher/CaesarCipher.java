@@ -1,11 +1,13 @@
-package data.security;
+package data.security.cipher;
 
 /**
- * An implementation of EncryptorDecryptor which
- * uses a Caesar Cipher Encryption method to
- * encrypt/decrypt messages.
+ * An implementation of EncryptorDecryptor interface.
+ * <br><br>
+ * The Caesar Cipher is a symmetric encryption algorithm
+ * which shifts every character by the number specified
+ * by the given key.
  * 
- * @author noahm
+ * @author Noah Perez
  *
  */
 public class CaesarCipher implements EncryptorDecryptor {

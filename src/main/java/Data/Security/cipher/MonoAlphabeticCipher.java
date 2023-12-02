@@ -1,5 +1,15 @@
-package data.security;
+package data.security.cipher;
 
+/**
+ * An implementation of the EncryptorDecryptor interface.
+ * <br><br>
+ * The MonoAlphabeticCipher is a symmetric encryption algorithm which
+ * uses a key of 26 letters and maps each letter a given plainText
+ * accordingly.
+ * 
+ * @author Noah Perez
+ *
+ */
 public class MonoAlphabeticCipher implements EncryptorDecryptor{
 
 	public String encrypt(String data, String key) {
