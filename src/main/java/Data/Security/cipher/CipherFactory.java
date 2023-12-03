@@ -1,8 +1,8 @@
 package data.security.cipher;
 
-public class EncryptorDecryptorFactory {
+public class CipherFactory {
 	
-	public static EncryptorDecryptor makeEncryptorDecryptor(String subclass) {
+	public static Cipher makeCipher(String subclass) {
 		
 		if(subclass.equals("caesar"))
 			return new CaesarCipher();

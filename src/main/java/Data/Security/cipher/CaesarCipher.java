@@ -1,7 +1,7 @@
 package data.security.cipher;
 
 /**
- * An implementation of EncryptorDecryptor interface.
+ * An implementation of Cipher interface.
  * <br><br>
  * The Caesar Cipher is a symmetric encryption algorithm
  * which shifts every character by the number specified
@@ -10,18 +10,16 @@ package data.security.cipher;
  * @author Noah Perez
  *
  */
-public class CaesarCipher implements EncryptorDecryptor {
+public class CaesarCipher implements Cipher {
 
-	public String encrypt(String data, String key) throws NumberFormatException {
-
+	public String encrypt(String plainText, String key) throws NumberFormatException {
 		int shiftValue = Integer.parseInt(key);
-		return shift(data, shiftValue);
+		return shift(plainText, shiftValue);
 	}
 
-	public String decrypt(String data, String key) throws NumberFormatException {
-
+	public String decrypt(String cipherText, String key) throws NumberFormatException {
 		int shiftValue = Integer.parseInt(key);
-		return shift(data, -shiftValue);
+		return shift(cipherText, -shiftValue);
 	}
 	
 	/**
